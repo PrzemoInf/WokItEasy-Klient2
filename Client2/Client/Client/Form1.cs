@@ -102,6 +102,7 @@ namespace Client
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //test
             IP = IPBox.Text;
             ZamButton.Visible = false;
             textBox4.Visible = true;
