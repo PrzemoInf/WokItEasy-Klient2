@@ -114,5 +114,11 @@ namespace Client
             label5.Visible = true;
             button1.Visible = false;    
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form3 form3 = new Form3();
+            form3.Show();
+        }
     }
 }
