@@ -37,6 +37,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button2 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // LogButton
@@ -71,6 +74,7 @@
             // 
             this.textBox5.Location = new System.Drawing.Point(216, 404);
             this.textBox5.Name = "textBox5";
+            this.textBox5.PasswordChar = '*';
             this.textBox5.Size = new System.Drawing.Size(100, 20);
             this.textBox5.TabIndex = 3;
             // 
@@ -120,9 +124,31 @@
             this.label6.TabIndex = 8;
             this.label6.Text = "IP";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Client.Properties.Resources.RestItEz;
+            this.pictureBox1.Location = new System.Drawing.Point(91, 45);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(315, 297);
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(444, 141);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(86, 79);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "Menu";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(549, 455);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -133,6 +159,7 @@
             this.Controls.Add(this.ZamButton);
             this.Controls.Add(this.LogButton);
             this.Name = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,6 +184,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

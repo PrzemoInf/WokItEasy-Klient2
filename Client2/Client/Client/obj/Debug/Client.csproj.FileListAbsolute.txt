@@ -9,3 +9,15 @@ C:\Github\Client2\Client\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 C:\Github\Client2\Client\Client\obj\Debug\Client.exe
 C:\Github\Client2\Client\Client\obj\Debug\Client.pdb
 C:\Github\Client2\Client\Client\obj\Debug\Client.Form2.resources
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\bin\Debug\Client.exe.config
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\bin\Debug\Client.exe
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\bin\Debug\Client.pdb
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.Form1.resources
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.Form2.resources
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.Properties.Resources.resources
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.csproj.GenerateResource.Cache
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.exe
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.pdb
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.Form3.resources

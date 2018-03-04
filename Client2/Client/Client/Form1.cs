@@ -78,6 +78,7 @@ namespace Client
                     label4.Visible = false;
                     label5.Visible = false;
                     button1.Visible = true;
+                    button2.Visible = true;
                     MessageBox.Show("Połączono");
                 }
                 else if (tekst == "W") MessageBox.Show("Niepoprawne dane");
@@ -112,7 +113,8 @@ namespace Client
             label6.Visible = true;
             label4.Visible = true;
             label5.Visible = true;
-            button1.Visible = false;    
+            button1.Visible = false;
+            button2.Visible = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
