@@ -55,3 +55,4 @@
 65 Zamkowe 8 1,9
 66 Fresco 9 20,9
 67 Pan Tadeusz 11 60
+WW
