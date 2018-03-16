@@ -20,6 +20,8 @@ namespace Client
         //test adfada
         //List<Skladnik> l_Skladnik = new List<Skladnik>();
         public string IP;
+        string ID;
+        string encryptyingCode = "FISH!";
         public Form1()
         {
             InitializeComponent();
@@ -42,23 +44,34 @@ namespace Client
                 do
                 {
                     str = "L";//Przesłanie komunikatu o checi zalogowania
+                    str = Szyfrowanie.Encrypt(str, encryptyingCode);
                     ba = asen.GetBytes(str);
                     stm.Write(ba, 0, ba.Length);
-                    bb = new byte[100];
-                    k = stm.Read(bb, 0, 100);
+                    bb = new byte[256];
+                    k = stm.Read(bb, 0, 256);
                     tekst = "";
                     for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                    tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                    str = "";
                 } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu checi logowania
 
                 str = textBox4.Text + " " + textBox5.Text;//login i hasło
+                str = Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
-                bb = new byte[100];
-                k = stm.Read(bb, 0, 100);
+                bb = new byte[256];
+                k = stm.Read(bb, 0, 256);
                 tekst = "";
                 for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
                 if (tekst == "C")
                 {
+                    bb = new byte[256];
+                    k = stm.Read(bb, 0, 256);
+                    tekst = "";
+                    for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                    tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                    ID = tekst;
                     using (var output = File.Create(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt")))
                     {
                         var buffer = new byte[1024];
@@ -96,13 +109,41 @@ namespace Client
         {
            
                 
-            Form2 form2 = new Form2(IPBox.Text);
+            Form2 form2 = new Form2(IPBox.Text, encryptyingCode, ID);
             form2.Show();
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            ASCIIEncoding asen = new ASCIIEncoding();
+            TcpClient tcpclnt = new TcpClient();
+            tcpclnt.Connect(IPBox.Text, 8001);
+            Stream stm = tcpclnt.GetStream();
+            string str;
+            byte[] ba;
+            byte[] bb;
+            string tekst;
+            int k;
+            do
+            {
+                str = "W";//Przesłanie komunikatu o checi zalogowania
+                str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                ba = asen.GetBytes(str);
+                stm.Write(ba, 0, ba.Length);
+                bb = new byte[256];
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                str = "";
+            } while (tekst != "OK");
+
+            str = textBox4.Text;//login
+            str = Szyfrowanie.Encrypt(str, encryptyingCode);
+            ba = asen.GetBytes(str);
+            stm.Write(ba, 0, ba.Length);
+
             //test
             IP = IPBox.Text;
             ZamButton.Visible = false;

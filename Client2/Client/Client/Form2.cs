@@ -21,12 +21,16 @@ namespace Client
         List <Skladnik> l_Skladnik = new List<Skladnik>();
         List<int> listaIlePozycjiNaStrone = new List<int>();
         List<Button> listaButtonowNaStronie = new List<Button>();
+        string encryptyingCode;
+        string ID;
         int ktoraStronaOgolnie = 0;
         string IP;
-        public Form2(string ip)
+        public Form2(string ip,string ec,string id)
         {
             InitializeComponent();
+            ID = id;
             IP = ip;
+            encryptyingCode = ec;
             StreamReader sr;
             sr = new StreamReader(source);
             string text = sr.ReadLine();
@@ -156,32 +160,48 @@ namespace Client
             do
             {
                 str = "O";//Przesłanie komunikatu o checi przeslania zamowienia
+                str= Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
-                bb = new byte[100];
-                k = stm.Read(bb, 0, 100);
+                bb = new byte[256];
+                k = stm.Read(bb, 0, 256);
                 tekst = "";
                 for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
             } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu checi przesłania danych
             do
             {
                 str = Convert.ToString(listBox1.Items.Count);//wysłanie komunikatu o ilosci elementów w zamówieniu
+                str = Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
-                bb = new byte[100];
-                k = stm.Read(bb, 0, 100);
+                bb = new byte[256];
+                k = stm.Read(bb, 0, 256);
                 tekst = "";
                 for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+            } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu ilosci elementów
+            do
+            {
+                str = Szyfrowanie.Encrypt(ID, encryptyingCode);//wysłanie komunikatu o ID klienta
+                ba = asen.GetBytes(str);
+                stm.Write(ba, 0, ba.Length);
+                bb = new byte[256];
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
             } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu ilosci elementów
             string text = "";
+
             for (int i = 0; i < (listBox1.Items.Count); i++)// przesył zamówień
             {
                 text = listBox1.Items[i].ToString();
-                string[] split = text.Split('\t');
+                //string[] split = text.Split('\t');
                 int id = -1;
                 foreach (var skladnik in l_Skladnik)//ustalanie id produktu
                 {
-                    if (skladnik.NazwaSM == split[0] && id < 0)
+                    if (skladnik.NazwaSM == text && id < 0)
                     {
                         id = skladnik.IdSM;
                         break;
@@ -190,15 +210,18 @@ namespace Client
                 do//przesył id produktu
                 {
                     str = Convert.ToString(id);
+                    str = Szyfrowanie.Encrypt(str, encryptyingCode);
                     ba = asen.GetBytes(str);
                     stm.Write(ba, 0, ba.Length);
-                    bb = new byte[100];
-                    k = stm.Read(bb, 0, 100);
+                    bb = new byte[256];
+                    k = stm.Read(bb, 0, 256);
                     tekst = "";
                     for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                    tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
                 } while (tekst != "OK");
-                listBox1.Items.Clear();
+                
             }
+            listBox1.Items.Clear();
             tcpclnt.Close();
         }
         private void Form2_Load_1(object sender, EventArgs e)
