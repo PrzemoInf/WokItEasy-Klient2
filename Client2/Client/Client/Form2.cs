@@ -18,8 +18,10 @@ namespace Client
     public partial class Form2 : Form
     {
         string source = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt");
-        List <Skladnik> l_Skladnik = new List<Skladnik>();
+        List<Skladnik> l_Skladnik = new List<Skladnik>();
+        List<Skladnik> l_PomSkladnik = new List<Skladnik>();
         List<int> listaIlePozycjiNaStrone = new List<int>();
+        int idStartowe;//id od którego  ma zacząć czytać liste
         List<Button> listaButtonowNaStronie = new List<Button>();
         int ktoraStronaOgolnie = 0;
         string IP;
@@ -37,15 +39,56 @@ namespace Client
                 string[] splited = text.Split(' ');
                 Skladnik skladnik = new Skladnik();
                 skladnik.IdSM = Convert.ToInt32(splited[0]);
-                skladnik.NazwaSM = splited[1];
-                skladnik.RodzajSM = splited[2];
-                skladnik.CenaSM = Convert.ToDouble(splited[3]);
+                if (splited.Length == 5)
+                {
+                    skladnik.NazwaSM = splited[1] + " " + splited[2];
+                    skladnik.RodzajSM = splited[3];
+                    skladnik.IdRodzaj = Convert.ToInt32(splited[3]);
+                    skladnik.CenaSM = Convert.ToDouble(splited[4]);
+                }
+                else
+                {
+                    skladnik.NazwaSM = splited[1];
+                    skladnik.RodzajSM = splited[2];
+                    skladnik.IdRodzaj = Convert.ToInt32(splited[2]);
+                    skladnik.CenaSM = Convert.ToDouble(splited[3]);
+                }
+
                 l_Skladnik.Add(skladnik);
             }
         }
         private void Form2_MouseClick(object sender, MouseEventArgs e)
         {
             this.Close();
+        }
+        private void Podziel()
+        {
+
+
+            for (int i = 1; i < 12; i++)
+            {
+                int ile = 0;
+                int ktoraStronaNaLiscie = 0;
+                foreach (Skladnik sm in l_Skladnik)
+                {
+                    int tmp = sm.IdRodzaj;
+                    if (tmp == i)
+                    {
+                        l_PomSkladnik.Add(sm);
+                        ile++;
+
+                        if (ile == 36)
+                        {
+                            listaIlePozycjiNaStrone.Add(ile);
+                            ile = 0;
+                            ktoraStronaNaLiscie++;
+                        }
+
+                    }
+                }
+                listaIlePozycjiNaStrone.Add(ile);
+            }
+
         }
         void StworzListeStron()
         {
@@ -82,8 +125,13 @@ namespace Client
                 int ilePokazac = ileButtonow;
                 int x, y;
                 x = y = 0;
-                int odKtoregoIDZaczac = ktoraStronaOgolnie * 36;
-                for (int a = 0; a < ilePokazac; a++)
+                //int odKtoregoIDZaczac = ktoraStronaOgolnie * 36;
+                idStartowe = 0;
+                for (int i = 0; i < ktoraStronaOgolnie; i++)
+                {
+                    idStartowe += listaIlePozycjiNaStrone[i];
+                }
+                for (int a = idStartowe; a < idStartowe + ilePokazac; a++)
                 {
                     if (a % 6 == 0 && x != 0)
                     {
@@ -96,7 +144,7 @@ namespace Client
                     //dynamicButton.BackColor = Color.Red;
                     //dynamicButton.ForeColor = Color.Blue;
                     dynamicButton.Location = new Point(320 + x, 80 + y);
-                    dynamicButton.Text = l_Skladnik[a].NazwaSM;
+                    dynamicButton.Text = l_PomSkladnik[a].NazwaSM;
                     x += 125;
 
                     dynamicButton.Click += new EventHandler(DynamicButton_Click);
@@ -205,7 +253,8 @@ namespace Client
         {
             //ZbudujListePozycji();
             CzyZaDuzoPozycji();
-            StworzListeStron();
+            Podziel();
+            //StworzListeStron();
             StwórzButtony();
         }
         void UsunButtony()
