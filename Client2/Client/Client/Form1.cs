@@ -79,7 +79,9 @@ namespace Client
                     label5.Visible = false;
                     button1.Visible = true;
                     button2.Visible = true;
-                    MessageBox.Show("Połączono");
+                    pictureBox1.Visible = false;
+                    pictureBox2.Visible = true;
+                    //MessageBox.Show("Połączono");
                 }
                 else if (tekst == "W") MessageBox.Show("Niepoprawne dane");
                 tcpclnt.Close();
@@ -104,6 +106,8 @@ namespace Client
         private void button1_Click(object sender, EventArgs e)
         {
             //test
+            pictureBox1.Visible = true;
+            pictureBox2.Visible = false;
             IP = IPBox.Text;
             ZamButton.Visible = false;
             textBox4.Visible = true;
