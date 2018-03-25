@@ -18,19 +18,17 @@ namespace Client
     public partial class Form2 : Form
     {
         string source = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt");
-        List <Skladnik> l_Skladnik = new List<Skladnik>();
+        List<Skladnik> l_Skladnik = new List<Skladnik>();
+        List<Skladnik> l_PomSkladnik = new List<Skladnik>();
         List<int> listaIlePozycjiNaStrone = new List<int>();
+        int idStartowe;//id od którego  ma zacząć czytać liste
         List<Button> listaButtonowNaStronie = new List<Button>();
-        string encryptyingCode;
-        string ID;
         int ktoraStronaOgolnie = 0;
         string IP;
-        public Form2(string ip,string ec,string id)
+        public Form2(string ip)
         {
             InitializeComponent();
-            ID = id;
             IP = ip;
-            encryptyingCode = ec;
             StreamReader sr;
             sr = new StreamReader(source);
             string text = sr.ReadLine();
@@ -41,15 +39,56 @@ namespace Client
                 string[] splited = text.Split(' ');
                 Skladnik skladnik = new Skladnik();
                 skladnik.IdSM = Convert.ToInt32(splited[0]);
-                skladnik.NazwaSM = splited[1];
-                skladnik.RodzajSM = splited[2];
-                skladnik.CenaSM = Convert.ToDouble(splited[3]);
+                if (splited.Length == 5)
+                {
+                    skladnik.NazwaSM = splited[1] + " " + splited[2];
+                    skladnik.RodzajSM = splited[3];
+                    skladnik.IdRodzaj = Convert.ToInt32(splited[3]);
+                    skladnik.CenaSM = Convert.ToDouble(splited[4]);
+                }
+                else
+                {
+                    skladnik.NazwaSM = splited[1];
+                    skladnik.RodzajSM = splited[2];
+                    skladnik.IdRodzaj = Convert.ToInt32(splited[2]);
+                    skladnik.CenaSM = Convert.ToDouble(splited[3]);
+                }
+
                 l_Skladnik.Add(skladnik);
             }
         }
         private void Form2_MouseClick(object sender, MouseEventArgs e)
         {
             this.Close();
+        }
+        private void Podziel()
+        {
+
+
+            for (int i = 1; i < 12; i++)
+            {
+                int ile = 0;
+                int ktoraStronaNaLiscie = 0;
+                foreach (Skladnik sm in l_Skladnik)
+                {
+                    int tmp = sm.IdRodzaj;
+                    if (tmp == i)
+                    {
+                        l_PomSkladnik.Add(sm);
+                        ile++;
+
+                        if (ile == 36)
+                        {
+                            listaIlePozycjiNaStrone.Add(ile);
+                            ile = 0;
+                            ktoraStronaNaLiscie++;
+                        }
+
+                    }
+                }
+                listaIlePozycjiNaStrone.Add(ile);
+            }
+
         }
         void StworzListeStron()
         {
@@ -86,8 +125,13 @@ namespace Client
                 int ilePokazac = ileButtonow;
                 int x, y;
                 x = y = 0;
-                int odKtoregoIDZaczac = ktoraStronaOgolnie * 36;
-                for (int a = 0; a < ilePokazac; a++)
+                //int odKtoregoIDZaczac = ktoraStronaOgolnie * 36;
+                idStartowe = 0;
+                for (int i = 0; i < ktoraStronaOgolnie; i++)
+                {
+                    idStartowe += listaIlePozycjiNaStrone[i];
+                }
+                for (int a = idStartowe; a < idStartowe + ilePokazac; a++)
                 {
                     if (a % 6 == 0 && x != 0)
                     {
@@ -100,7 +144,7 @@ namespace Client
                     //dynamicButton.BackColor = Color.Red;
                     //dynamicButton.ForeColor = Color.Blue;
                     dynamicButton.Location = new Point(320 + x, 80 + y);
-                    dynamicButton.Text = l_Skladnik[a].NazwaSM;
+                    dynamicButton.Text = l_PomSkladnik[a].NazwaSM;
                     x += 125;
 
                     dynamicButton.Click += new EventHandler(DynamicButton_Click);
@@ -160,48 +204,32 @@ namespace Client
             do
             {
                 str = "O";//Przesłanie komunikatu o checi przeslania zamowienia
-                str= Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
-                bb = new byte[256];
-                k = stm.Read(bb, 0, 256);
+                bb = new byte[100];
+                k = stm.Read(bb, 0, 100);
                 tekst = "";
                 for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
             } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu checi przesłania danych
             do
             {
                 str = Convert.ToString(listBox1.Items.Count);//wysłanie komunikatu o ilosci elementów w zamówieniu
-                str = Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
-                bb = new byte[256];
-                k = stm.Read(bb, 0, 256);
+                bb = new byte[100];
+                k = stm.Read(bb, 0, 100);
                 tekst = "";
                 for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
-            } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu ilosci elementów
-            do
-            {
-                str = Szyfrowanie.Encrypt(ID, encryptyingCode);//wysłanie komunikatu o ID klienta
-                ba = asen.GetBytes(str);
-                stm.Write(ba, 0, ba.Length);
-                bb = new byte[256];
-                k = stm.Read(bb, 0, 256);
-                tekst = "";
-                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
             } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu ilosci elementów
             string text = "";
-
             for (int i = 0; i < (listBox1.Items.Count); i++)// przesył zamówień
             {
                 text = listBox1.Items[i].ToString();
-                //string[] split = text.Split('\t');
+                string[] split = text.Split('\t');
                 int id = -1;
                 foreach (var skladnik in l_Skladnik)//ustalanie id produktu
                 {
-                    if (skladnik.NazwaSM == text && id < 0)
+                    if (skladnik.NazwaSM == split[0] && id < 0)
                     {
                         id = skladnik.IdSM;
                         break;
@@ -210,25 +238,23 @@ namespace Client
                 do//przesył id produktu
                 {
                     str = Convert.ToString(id);
-                    str = Szyfrowanie.Encrypt(str, encryptyingCode);
                     ba = asen.GetBytes(str);
                     stm.Write(ba, 0, ba.Length);
-                    bb = new byte[256];
-                    k = stm.Read(bb, 0, 256);
+                    bb = new byte[100];
+                    k = stm.Read(bb, 0, 100);
                     tekst = "";
                     for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
-                    tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
                 } while (tekst != "OK");
-                
+                listBox1.Items.Clear();
             }
-            listBox1.Items.Clear();
             tcpclnt.Close();
         }
         private void Form2_Load_1(object sender, EventArgs e)
         {
             //ZbudujListePozycji();
             CzyZaDuzoPozycji();
-            StworzListeStron();
+            Podziel();
+            //StworzListeStron();
             StwórzButtony();
         }
         void UsunButtony()
