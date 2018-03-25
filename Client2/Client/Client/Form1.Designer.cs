@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.LogButton = new System.Windows.Forms.Button();
             this.ZamButton = new System.Windows.Forms.Button();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -39,14 +40,18 @@
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // LogButton
             // 
-            this.LogButton.Location = new System.Drawing.Point(322, 348);
+            this.LogButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.LogButton.Location = new System.Drawing.Point(416, 321);
             this.LogButton.Name = "LogButton";
-            this.LogButton.Size = new System.Drawing.Size(84, 76);
+            this.LogButton.Size = new System.Drawing.Size(121, 131);
             this.LogButton.TabIndex = 0;
             this.LogButton.Text = "Zaloguj";
             this.LogButton.UseVisualStyleBackColor = true;
@@ -54,12 +59,14 @@
             // 
             // ZamButton
             // 
-            this.ZamButton.Location = new System.Drawing.Point(444, 52);
+            this.ZamButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.ZamButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.ZamButton.Location = new System.Drawing.Point(12, 69);
             this.ZamButton.Name = "ZamButton";
-            this.ZamButton.Size = new System.Drawing.Size(86, 82);
+            this.ZamButton.Size = new System.Drawing.Size(121, 131);
             this.ZamButton.TabIndex = 1;
             this.ZamButton.Text = "Przyjmij zamówienie";
-            this.ZamButton.UseVisualStyleBackColor = true;
+            this.ZamButton.UseVisualStyleBackColor = false;
             this.ZamButton.Visible = false;
             this.ZamButton.Click += new System.EventHandler(this.ZamButton_Click);
             // 
@@ -88,12 +95,14 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 348);
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.button1.Location = new System.Drawing.Point(3, 321);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(84, 75);
+            this.button1.Size = new System.Drawing.Size(104, 131);
             this.button1.TabIndex = 5;
             this.button1.Text = "Wyloguj";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -127,26 +136,52 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Client.Properties.Resources.RestItEz;
-            this.pictureBox1.Location = new System.Drawing.Point(91, 45);
+            this.pictureBox1.Location = new System.Drawing.Point(139, 69);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(315, 297);
+            this.pictureBox1.Size = new System.Drawing.Size(276, 257);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(444, 141);
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.button2.Location = new System.Drawing.Point(171, 69);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(86, 79);
+            this.button2.Size = new System.Drawing.Size(121, 131);
             this.button2.TabIndex = 10;
             this.button2.Text = "Menu";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
+            this.label7.Location = new System.Drawing.Point(213, 19);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(146, 39);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "RestItEz";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(33, 12);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(57, 50);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 12;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Visible = false;
             // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(549, 455);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label6);
@@ -160,6 +195,7 @@
             this.Controls.Add(this.LogButton);
             this.Name = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,6 +222,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

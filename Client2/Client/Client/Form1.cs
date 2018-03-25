@@ -87,6 +87,8 @@ namespace Client
                     textBox5.Visible = false;
                     LogButton.Visible = false;
                     IPBox.Visible = false;
+                    pictureBox1.Visible = false;
+                    pictureBox2.Visible = true;
                     label6.Visible = false;
                     label4.Visible = false;
                     label5.Visible = false;
@@ -146,6 +148,8 @@ namespace Client
 
             //test
             IP = IPBox.Text;
+            pictureBox1.Visible = true;
+            pictureBox2.Visible = false;
             ZamButton.Visible = false;
             textBox4.Visible = true;
             textBox5.Visible = true;
