@@ -13,7 +13,6 @@ namespace Client
             Podstawa, Baza, Sos, Posypka, Inne, Napoje,
         }
         private int idSM;
-        private int idRodzaj;
         private string nazwaSM;
         private string rodzajSM;
         private double cenaSM;
@@ -23,8 +22,6 @@ namespace Client
         public double CenaSM { get => cenaSM; set => cenaSM = value; }
         public string NazwaSM { get => nazwaSM; set => nazwaSM = value; }
         public int IdSM { get => idSM; set => idSM = value; }
-        public int IdRodzaj { get => idRodzaj; set => idRodzaj = value; }
         public string RodzajSM { get => rodzajSM; set => rodzajSM = value; }
-
     }
 }
