@@ -188,40 +188,47 @@ namespace Client
             do
             {
                 str = "O";//Przesłanie komunikatu o checi przeslania zamowienia
-                str= Szyfrowanie.Encrypt(str, encryptyingCode);
+                //str= Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
                 bb = new byte[256];
                 k = stm.Read(bb, 0, 256);
                 tekst = "";
                 for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                //tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
             } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu checi przesłania danych
-            do
-            {
-                str = Convert.ToString(listBox1.Items.Count);//wysłanie komunikatu o ilosci elementów w zamówieniu
-                str = Szyfrowanie.Encrypt(str, encryptyingCode);
-                ba = asen.GetBytes(str);
-                stm.Write(ba, 0, ba.Length);
-                bb = new byte[256];
-                k = stm.Read(bb, 0, 256);
-                tekst = "";
-                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
-            } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu ilosci elementów
-            do
-            {
-                str = Szyfrowanie.Encrypt(ID, encryptyingCode);//wysłanie komunikatu o ID klienta
-                ba = asen.GetBytes(str);
-                stm.Write(ba, 0, ba.Length);
-                bb = new byte[256];
-                k = stm.Read(bb, 0, 256);
-                tekst = "";
-                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
-            } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu ilosci elementów
-            string text = "";
+                                    //do
+                                    //{
+                                    //    str = Convert.ToString(listBox1.Items.Count);//wysłanie komunikatu o ilosci elementów w zamówieniu
+                                    //    //str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                                    //    ba = asen.GetBytes(str);
+                                    //    stm.Write(ba, 0, ba.Length);
+                                    //    bb = new byte[256];
+                                    //    k = stm.Read(bb, 0, 256);
+                                    //    tekst = "";
+                                    //    for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                                    //    //tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                                    //} while (tekst != "OK");//potwierdzenie od serwera o przyjeciu ilosci elementów
+                                    //str = ID;
+                                    //ba = asen.GetBytes(str);
+                                    //stm.Write(ba, 0, ba.Length);
+                                    //do
+                                    //{
+                                    //    //str = Szyfrowanie.Encrypt(ID, encryptyingCode);//wysłanie komunikatu o ID klienta
 
+            //    bb = new byte[256];
+            //    k = stm.Read(bb, 0, 256);
+            //    tekst = "";
+            //    for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+            //    tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+            //} while (tekst != "OK");//potwierdzenie od serwera o przyjeciu ilosci elementów
+            //string text = "";
+            string text = "";
+            string tmp=ID;
+            tmp += "#" + label2.Text;
             for (int i = 0; i < (listBox1.Items.Count); i++)// przesył zamówień
             {
                 text = listBox1.Items[i].ToString();
@@ -232,23 +239,31 @@ namespace Client
                     if (skladnik.NazwaSM == text && id < 0)
                     {
                         id = skladnik.IdSM;
+                        tmp += "#" + Convert.ToString(id);
                         break;
                     }
                 }
-                do//przesył id produktu
-                {
-                    str = Convert.ToString(id);
-                    str = Szyfrowanie.Encrypt(str, encryptyingCode);
-                    ba = asen.GetBytes(str);
-                    stm.Write(ba, 0, ba.Length);
-                    bb = new byte[256];
-                    k = stm.Read(bb, 0, 256);
-                    tekst = "";
-                    for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
-                    tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
-                } while (tekst != "OK");
+                //str = Convert.ToString(id);
+                //str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                
+                //do//przesył id produktu
+                //{
+                //    str = Convert.ToString(id);
+                //    //str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                //    ba = asen.GetBytes(str);
+                //    stm.Write(ba, 0, ba.Length);
+                //    bb = new byte[256];
+                //    k = stm.Read(bb, 0, 256);
+                //    tekst = "";
+                //    for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                //    //tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                //} while (tekst != "OK");
                 
             }
+            tmp += "";
+            tmp += "";
+            ba = asen.GetBytes(text);
+            stm.Write(ba, 0, ba.Length);
             label2.Text = "0";
             listBox1.Items.Clear();
             tcpclnt.Close();

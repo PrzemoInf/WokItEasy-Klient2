@@ -44,43 +44,46 @@ namespace Client
                 do
                 {
                     str = "L";//Przesłanie komunikatu o checi zalogowania
-                    str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                    //str = Szyfrowanie.Encrypt(str, encryptyingCode);
                     ba = asen.GetBytes(str);
                     stm.Write(ba, 0, ba.Length);
                     bb = new byte[256];
+                    k = stm.Read(bb, 0, 256);//dubel
                     k = stm.Read(bb, 0, 256);
                     tekst = "";
                     for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                    tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                    //tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
                     str = "";
                 } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu checi logowania
 
                 str = textBox4.Text + " " + textBox5.Text;//login i hasło
-                str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                //str = Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
                 bb = new byte[256];
+                k = stm.Read(bb, 0, 256);//dubel
                 k = stm.Read(bb, 0, 256);
                 tekst = "";
                 for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                //tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
                 if (tekst == "C")
                 {
                     bb = new byte[256];
+                    k = stm.Read(bb, 0, 256);//dubel
                     k = stm.Read(bb, 0, 256);
                     tekst = "";
                     for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                    tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                    //tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
                     ID = tekst;
-                    using (var output = File.Create(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt")))
-                    {
-                        var buffer = new byte[1024];
-                        int bytesRead;
-                        while ((bytesRead = stm.Read(buffer, 0, buffer.Length)) > 0)
-                        {
-                            output.Write(buffer, 0, bytesRead);
-                        }
-                    }
+                    //using (var output = File.Create(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt")))
+                    //{
+                    //    var buffer = new byte[1024];
+                    //    int bytesRead;
+                    //    while ((bytesRead = stm.Read(buffer, 0, buffer.Length)) > 0)
+                    //    {
+                    //        output.Write(buffer, 0, bytesRead);
+                    //    }
+                    //}
                     IP = IPBox.Text;
                     ZamButton.Visible = true;
                     textBox4.Visible = false;
@@ -108,9 +111,7 @@ namespace Client
         
 
         private void ZamButton_Click(object sender, EventArgs e)
-        {
-           
-                
+        {   
             Form2 form2 = new Form2(IPBox.Text, encryptyingCode, ID);
             form2.Show();
 
@@ -130,19 +131,20 @@ namespace Client
             do
             {
                 str = "W";//Przesłanie komunikatu o checi zalogowania
-                str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                //str = Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
                 bb = new byte[256];
+                //k = stm.Read(bb, 0, 256);//dubel
                 k = stm.Read(bb, 0, 256);
                 tekst = "";
                 for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
-                tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+               // tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
                 str = "";
             } while (tekst != "OK");
 
             str = textBox4.Text;//login
-            str = Szyfrowanie.Encrypt(str, encryptyingCode);
+           // str = Szyfrowanie.Encrypt(str, encryptyingCode);
             ba = asen.GetBytes(str);
             stm.Write(ba, 0, ba.Length);
 
@@ -166,6 +168,64 @@ namespace Client
         {
             Form3 form3 = new Form3();
             form3.Show();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ASCIIEncoding asen = new ASCIIEncoding();
+            TcpClient tcpclnt = new TcpClient();
+            tcpclnt.Connect(IPBox.Text, 8001);
+            Stream stm = tcpclnt.GetStream();
+            string str;
+            byte[] ba;
+            byte[] bb;
+            string tekst;
+            int k;
+            do
+            {
+                str = "M";//Przesłanie komunikatu o checi zalogowania
+                //str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                ba = asen.GetBytes(str);
+                stm.Write(ba, 0, ba.Length);
+                bb = new byte[256];
+                //k = stm.Read(bb, 0, 256);//dubel
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                // tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                str = "";
+            } while (tekst != "OK");
+            StreamWriter sw = new StreamWriter(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt"));
+            k = stm.Read(bb, 0, 256);
+            tekst = "";
+            for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+            int ilosc = Convert.ToInt32(tekst);
+            string test="";
+            for (int i = 0; i < ilosc; i++)
+            {
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                tekst += "";
+                tekst += "";
+                test += tekst;
+            }
+            //using (var output = File.Create(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt")))
+            //{
+            //    var buffer = new byte[1024];
+            //    int bytesRead;
+            //    while ((bytesRead = stm.Read(buffer, 0, buffer.Length)) > 0)
+            //    {
+            //        output.Write(buffer, 0, bytesRead);
+            //    }
+            //}
+
+
+
+
         }
     }
 }
