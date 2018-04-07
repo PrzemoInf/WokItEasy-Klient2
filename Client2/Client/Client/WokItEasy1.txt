@@ -1,57 +1,57 @@
-56 
-1 Teryaki 1 12
-2 Mee 3 4
-3 Kurczak 4 4
-4 Sezam 2 1
-5 Rosół 7 10
-6 Coca-cola 5 6
-7 Pad Thai 1 12
-8 Pepsi 5 6
-13 Ryż 3 6
-14 Pierogi 6 16
-15 Żeberka 3 16
-16 Pomidorowa 7 5
-23 Zamkowe 8 1,9
-24 Fresco 9 20,9
-26 Pan Tadeusz 11 60
-27 Teryaki 1 12
-28 Mee 3 4
-29 Kurczak 4 4
-30 Sezam 2 1
-31 Rosół 7 10
-32 Coca-cola 5 6
-33 Pad Thai 1 12
-34 Pepsi 5 6
-35 Ryż 3 6
-36 Pierogi 6 16
-37 Żeberka 3 16
-38 Pomidorowa 7 5
-39 Zamkowe 8 1,9
-40 Fresco 9 20,9
-41 Pan Tadeusz 11 60
-42 Rosół 7 10
-43 Coca-cola 5 6
-44 Pad Thai 1 12
-45 Pepsi 5 6
-46 Ryż 3 6
-47 Pierogi 6 16
-48 Żeberka 3 16
-49 Pomidorowa 7 5
-50 Zamkowe 8 1,9
-51 Fresco 9 20,9
-52 Pan Tadeusz 11 60
-53 Teryaki 1 12
-54 Mee 3 4
-55 Kurczak 4 4
-56 Sezam 2 1
-57 Rosół 7 10
-58 Coca-cola 5 6
-59 Pad Thai 1 12
-60 Pepsi 5 6
-61 Ryż 3 6
-62 Pierogi 6 16
-63 Żeberka 3 16
-64 Pomidorowa 7 5
-65 Zamkowe 8 1,9
-66 Fresco 9 20,9
-67 Pan Tadeusz 11 60
+56
+1#Teryaki#Sos#12#2017-04-16 00:00:00
+2#Mee#Podstawa#4#2017-04-16 00:00:00
+3#Kurczak#Proteina#4#2017-04-16 00:00:00
+4#Sezam#Posypka#1#2017-04-16 00:00:00
+5#Rosół#Zupa#10#2017-04-17 00:00:00
+6#Coca-cola#Napoje#6#2017-04-17 00:00:00
+7#Pad Thai#Sos#12#2017-04-17 18:26:41
+8#Pepsi#Napoje#6#2017-04-19 16:16:53
+13#Ryż#Podstawa#6#2018-02-22 12:49:24
+14#Pierogi#Inne#16#2018-02-22 12:50:21
+15#Żeberka#Podstawa#16#2018-02-22 12:51:10
+16#Pomidorowa#Zupa#5#2018-02-22 12:51:26
+23#Zamkowe#Piwo#1,9#2018-02-22 15:24:15
+24#Fresco#Wino#20,9#2018-02-22 16:09:37
+26#Pan Tadeusz#Wódka#60#2018-02-22 16:18:08
+27#Teryaki#Sos#12#2017-04-16 00:00:00
+28#Mee#Podstawa#4#2017-04-16 00:00:00
+29#Kurczak#Proteina#4#2017-04-16 00:00:00
+30#Sezam#Posypka#1#2017-04-16 00:00:00
+31#Rosół#Zupa#10#2017-04-17 00:00:00
+32#Coca-cola#Napoje#6#2017-04-17 00:00:00
+33#Pad Thai#Sos#12#2017-04-17 18:26:41
+34#Pepsi#Napoje#6#2017-04-19 16:16:53
+35#Ryż#Podstawa#6#2018-02-22 12:49:24
+36#Pierogi#Inne#16#2018-02-22 12:50:21
+37#Żeberka#Podstawa#16#2018-02-22 12:51:10
+38#Pomidorowa#Zupa#5#2018-02-22 12:51:26
+39#Zamkowe#Piwo#1,9#2018-02-22 15:24:15
+40#Fresco#Wino#20,9#2018-02-22 16:09:37
+41#Pan Tadeusz#Wódka#60#2018-02-22 16:18:08
+42#Rosół#Zupa#10#2017-04-17 00:00:00
+43#Coca-cola#Napoje#6#2017-04-17 00:00:00
+44#Pad Thai#Sos#12#2017-04-17 18:26:41
+45#Pepsi#Napoje#6#2017-04-19 16:16:53
+46#Ryż#Podstawa#6#2018-02-22 12:49:24
+47#Pierogi#Inne#16#2018-02-22 12:50:21
+48#Żeberka#Podstawa#16#2018-02-22 12:51:10
+49#Pomidorowa#Zupa#5#2018-02-22 12:51:26
+50#Zamkowe#Piwo#1,9#2018-02-22 15:24:15
+51#Fresco#Wino#20,9#2018-02-22 16:09:37
+52#Pan Tadeusz#Wódka#60#2018-02-22 16:18:08
+53#Teryaki#Sos#12#2017-04-16 00:00:00
+54#Mee#Podstawa#4#2017-04-16 00:00:00
+55#Kurczak#Proteina#4#2017-04-16 00:00:00
+56#Sezam#Posypka#1#2017-04-16 00:00:00
+57#Rosół#Zupa#10#2017-04-17 00:00:00
+58#Coca-cola#Napoje#6#2017-04-17 00:00:00
+59#Pad Thai#Sos#12#2017-04-17 18:26:41
+60#Pepsi#Napoje#6#2017-04-19 16:16:53
+61#Ryż#Podstawa#6#2018-02-22 12:49:24
+62#Pierogi#Inne#16#2018-02-22 12:50:21
+63#Żeberka#Podstawa#16#2018-02-22 12:51:10
+64#Pomidorowa#Zupa#5#2018-02-22 12:51:26
+65#Zamkowe#Piwo#1,9#2018-02-22 15:24:15
+66#Fresco#Wino#20,9#2018-02-22 16:09:37
+67#Pan Tadeusz#Wódka#60#2018-02-22 16:18:08

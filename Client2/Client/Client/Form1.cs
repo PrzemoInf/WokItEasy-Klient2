@@ -47,30 +47,39 @@ namespace Client
                     //str = Szyfrowanie.Encrypt(str, encryptyingCode);
                     ba = asen.GetBytes(str);
                     stm.Write(ba, 0, ba.Length);
-                    bb = new byte[256];
-                    k = stm.Read(bb, 0, 256);//dubel
-                    k = stm.Read(bb, 0, 256);
+                    bb = new byte[3];
+                    k = stm.Read(bb, 0, 3);//dubel
+                    tekst = "";
+                    for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                    bb = new byte[Convert.ToInt32(tekst)];
+                    k = stm.Read(bb, 0, Convert.ToInt32(tekst));
                     tekst = "";
                     for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
                     //tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
                     str = "";
                 } while (tekst != "OK");//potwierdzenie od serwera o przyjeciu checi logowania
-
+                bb = new byte[256];
                 str = textBox4.Text + " " + textBox5.Text;//login i hasło
                 //str = Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
-                bb = new byte[256];
-                k = stm.Read(bb, 0, 256);//dubel
-                k = stm.Read(bb, 0, 256);
+                bb = new byte[3];
+                k = stm.Read(bb, 0, 3);//dubel
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                bb = new byte[Convert.ToInt32(tekst)];
+                k = stm.Read(bb, 0, Convert.ToInt32(tekst));
                 tekst = "";
                 for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
                 //tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
                 if (tekst == "C")
                 {
-                    bb = new byte[256];
-                    k = stm.Read(bb, 0, 256);//dubel
-                    k = stm.Read(bb, 0, 256);
+                    bb = new byte[3];
+                    k = stm.Read(bb, 0, 3);//dubel
+                    tekst = "";
+                    for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                    bb = new byte[Convert.ToInt32(tekst)];
+                    k = stm.Read(bb, 0, Convert.ToInt32(tekst));
                     tekst = "";
                     for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
                     //tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
@@ -97,6 +106,7 @@ namespace Client
                     label5.Visible = false;
                     button1.Visible = true;
                     button2.Visible = true;
+                    button3.Visible = true;
                     MessageBox.Show("Połączono");
                 }
                 else if (tekst == "W") MessageBox.Show("Niepoprawne dane");
@@ -162,6 +172,8 @@ namespace Client
             label5.Visible = true;
             button1.Visible = false;
             button2.Visible = false;
+            button3.Visible = false;
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -201,18 +213,33 @@ namespace Client
             for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
             int ilosc = Convert.ToInt32(tekst);
             string test="";
+            UTF8Encoding coderUTF = new UTF8Encoding();
+            sw.WriteLine(ilosc);
             for (int i = 0; i < ilosc; i++)
             {
-                k = stm.Read(bb, 0, 256);
+                k = stm.Read(bb, 0, 3);
                 tekst = "";
                 for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
-                k = stm.Read(bb, 0, 256);
+                bb = new byte[Convert.ToInt32(tekst)];
+                k = stm.Read(bb, 0, Convert.ToInt32(tekst));
                 tekst = "";
-                for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                tekst = System.Text.Encoding.UTF8.GetString(bb);
+                //for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
                 tekst += "";
                 tekst += "";
-                test += tekst;
+                test = tekst;
+                sw.WriteLine(test);
             }
+            sw.Close();
+            //sw = new StreamWriter(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt"));
+            //StreamReader sr = new StreamReader(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy2.txt"));
+            //string tmp;
+            //while((tmp=sr.ReadLine())!="")
+            //{
+            //    sw.WriteLine(tmp);
+            //}
+            //sr.Close();
+            //sw.Close();
             //using (var output = File.Create(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt")))
             //{
             //    var buffer = new byte[1024];

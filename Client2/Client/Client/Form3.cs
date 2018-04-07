@@ -25,7 +25,7 @@ namespace Client
             for (int i = 0; i < ilosc; i++)
             {
                 text = sr.ReadLine();
-                string[] splited = text.Split(' ');
+                string[] splited = text.Split('#');
                 Skladnik skladnik = new Skladnik();
                 skladnik.IdSM = Convert.ToInt32(splited[0]);
                 skladnik.NazwaSM = splited[1];

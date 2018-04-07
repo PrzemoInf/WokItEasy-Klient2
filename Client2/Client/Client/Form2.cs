@@ -40,23 +40,66 @@ namespace Client
             for (int i = 0; i < ilosc; i++)
             {
                 text = sr.ReadLine();
-                string[] splited = text.Split(' ');
+                string[] splited = text.Split('#');
                 Skladnik skladnik = new Skladnik();
                 skladnik.IdSM = Convert.ToInt32(splited[0]);
-                if (splited.Length == 5)
+                skladnik.NazwaSM = splited[1];
+                skladnik.RodzajSM = splited[2];
+                switch(splited[2])
                 {
-                    skladnik.NazwaSM = splited[1] + " " + splited[2];
-                    skladnik.RodzajSM = splited[3];
-                    skladnik.IdRodzaj = Convert.ToInt32(splited[3]);
-                    skladnik.CenaSM = Convert.ToDouble(splited[4]);
+                    case "Sos":
+                        {
+                            skladnik.IdRodzaj = 1;
+                            break;
+                        }
+                    case "Posypka":
+                        {
+                            skladnik.IdRodzaj = 2;
+                            break;
+                        }
+                    case "Podstawa":
+                        {
+                            skladnik.IdRodzaj = 3;
+                            break;
+                        }
+                    case "Proteina":
+                        {
+                            skladnik.IdRodzaj = 4;
+                            break;
+                        }
+                    case "Napoje":
+                        {
+                            skladnik.IdRodzaj = 5;
+                            break;
+                        }
+                    case "Inne":
+                        {
+                            skladnik.IdRodzaj = 6;
+                            break;
+                        }
+                    case "Zupa":
+                        {
+                            skladnik.IdRodzaj = 7;
+                            break;
+                        }
+                    case "Piwo":
+                        {
+                            skladnik.IdRodzaj = 8;
+                            break;
+                        }
+                    case "Wino":
+                        {
+                            skladnik.IdRodzaj = 9;
+                            break;
+                        }
+                    case "Wódka":
+                        {
+                            skladnik.IdRodzaj = 11;
+                            break;
+                        }
                 }
-                else
-                {
-                    skladnik.NazwaSM = splited[1];
-                    skladnik.RodzajSM = splited[2];
-                    skladnik.IdRodzaj = Convert.ToInt32(splited[2]);
-                    skladnik.CenaSM = Convert.ToDouble(splited[3]);
-                }
+               // skladnik.IdRodzaj = Convert.ToInt32(splited[2]);
+                skladnik.CenaSM = Convert.ToDouble(splited[3]);
                 l_Skladnik.Add(skladnik);
             }
         }
@@ -262,7 +305,7 @@ namespace Client
             }
             tmp += "";
             tmp += "";
-            ba = asen.GetBytes(text);
+            ba = asen.GetBytes(tmp);
             stm.Write(ba, 0, ba.Length);
             label2.Text = "0";
             listBox1.Items.Clear();
