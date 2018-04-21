@@ -107,9 +107,21 @@ namespace Client
         {
             this.Close();
         }
+        private int ZnajdzNajwiekszy()
+        {
+            int wynik = 0;
+            foreach (Skladnik sm in l_Skladnik)
+            {
+                if(wynik<sm.IdRodzaj)
+                {
+                    wynik = sm.IdRodzaj;
+                }
+            }
+            return wynik;
+        }
         private void Podziel()
         {
-            for (int i = 1; i < 12; i++)
+            for (int i = 1; i < ZnajdzNajwiekszy(); i++)
             {
                 int ile = 0;
                 int ktoraStronaNaLiscie = 0;
