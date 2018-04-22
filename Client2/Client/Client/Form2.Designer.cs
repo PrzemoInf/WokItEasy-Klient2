@@ -54,7 +54,7 @@
             this.Koniec.Name = "Koniec";
             this.Koniec.Size = new System.Drawing.Size(236, 136);
             this.Koniec.TabIndex = 1;
-            this.Koniec.Text = "Koniec";
+            this.Koniec.Text = "Złóż zamówienie";
             this.Koniec.UseVisualStyleBackColor = true;
             this.Koniec.Click += new System.EventHandler(this.Koniec_Click);
             // 
