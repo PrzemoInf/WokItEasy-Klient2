@@ -102,6 +102,7 @@ namespace Client
                 skladnik.CenaSM = Convert.ToDouble(splited[3]);
                 l_Skladnik.Add(skladnik);
             }
+            sr.Close();
         }
         private void Form2_MouseClick(object sender, MouseEventArgs e)
         {

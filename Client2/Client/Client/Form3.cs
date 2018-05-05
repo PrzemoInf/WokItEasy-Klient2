@@ -41,7 +41,7 @@ namespace Client
                 listBox1.Items.Add(składnik.NazwaSM + " (" + składnik.RodzajSM + ")" + dots + składnik.CenaSM.ToString());
 
             }
-
+            sr.Close();
         }
         string Dots(string w, int poIluZnakachCena)
         {

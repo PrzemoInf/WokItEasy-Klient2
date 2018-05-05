@@ -107,6 +107,7 @@ namespace Client
                     button1.Visible = true;
                     button2.Visible = true;
                     button3.Visible = true;
+                    button4.Visible = true;
                     MessageBox.Show("Połączono");
                 }
                 else if (tekst == "W") MessageBox.Show("Niepoprawne dane");
@@ -173,6 +174,7 @@ namespace Client
             button1.Visible = false;
             button2.Visible = false;
             button3.Visible = false;
+            button4.Visible = false;
 
         }
 
@@ -231,28 +233,21 @@ namespace Client
                 sw.WriteLine(test);
             }
             sw.Close();
-            //sw = new StreamWriter(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt"));
-            //StreamReader sr = new StreamReader(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy2.txt"));
-            //string tmp;
-            //while((tmp=sr.ReadLine())!="")
-            //{
-            //    sw.WriteLine(tmp);
-            //}
-            //sr.Close();
-            //sw.Close();
-            //using (var output = File.Create(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt")))
-            //{
-            //    var buffer = new byte[1024];
-            //    int bytesRead;
-            //    while ((bytesRead = stm.Read(buffer, 0, buffer.Length)) > 0)
-            //    {
-            //        output.Write(buffer, 0, bytesRead);
-            //    }
-            //}
+        }
 
-
-
-
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Form4 oz = new Form4(IPBox.Text);
+            oz.Show();
+            if (Screen.AllScreens.Length > 1)
+            {
+                Screen[] screens = Screen.AllScreens;
+                Rectangle bounds = screens[1].Bounds;
+                oz.SetBounds(bounds.X, bounds.Y, bounds.Width, bounds.Height);
+                oz.StartPosition = FormStartPosition.Manual;
+                oz.Location = Screen.AllScreens[1].WorkingArea.Location;
+            }
+            oz.WindowState = FormWindowState.Maximized;
         }
     }
 }
