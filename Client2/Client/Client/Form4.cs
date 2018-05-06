@@ -53,7 +53,7 @@ namespace Client
             int k;
             do
             {
-                str = "SZ";//Przesłanie komunikatu o checi zalogowania
+                str = "SZ";//Przesłanie komunikatu o checi pobrania listy zamówień
                 //str = Szyfrowanie.Encrypt(str, encryptyingCode);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
@@ -66,7 +66,7 @@ namespace Client
                 str = "";
             } while (tekst != "OK") ;
 
-            StreamWriter sw = new StreamWriter(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasyZ.txt"));
+            StreamWriter sw = new StreamWriter(source2);
             k = stm.Read(bb, 0, 256);
             tekst = "";
             for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
@@ -109,7 +109,12 @@ namespace Client
             }
             return tmp;
         }
-        private void ObecneZamówienia_MouseClick(object sender, MouseEventArgs e)
+        private void Form4_MouseClick(object sender, MouseEventArgs e)
+        {
+            thr.Abort();
+            this.Close();
+        }
+        private void Form4_Closing(object sender, MouseEventArgs e)
         {
             thr.Abort();
             this.Close();
@@ -198,11 +203,37 @@ namespace Client
         }
         private void DynamicButton_Click(object sender, EventArgs e)
         {
-            //tu będzie przesył danych do serwera
+            Button clickedButton = sender as Button;
+            int id = Convert.ToInt32(clickedButton.Tag);
 
-            //Button clickedButton = sender as Button;
-            //Zamówienie.WykonajZamówienie(Convert.ToInt32(clickedButton.Tag));
-            //buttonsChanged = true;
+            ASCIIEncoding asen = new ASCIIEncoding();
+            TcpClient tcpclnt = new TcpClient();
+            tcpclnt.Connect(IP, 8001);
+            Stream stm = tcpclnt.GetStream();
+            string str;
+            byte[] ba;
+            byte[] bb;
+            string tekst;
+            int k;
+            do
+            {
+                str = "FZ";//Przesłanie komunikatu o przesłaniu zrealizowanego zamówienia
+                //str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                ba = asen.GetBytes(str);
+                stm.Write(ba, 0, ba.Length);
+                bb = new byte[256];
+                //k = stm.Read(bb, 0, 256);//dubel
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                // tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                str = "";
+            } while (tekst != "OK");
+            str = Convert.ToString(id);
+            ba = asen.GetBytes(str);
+            stm.Write(ba, 0, ba.Length);
+            buttonsChanged = true;
+            PobierzZamówienia();
 
         }
         void Działaj()
@@ -278,6 +309,18 @@ namespace Client
 
         private void ObecneZamówienia_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void Form4_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            thr.Abort();
+            this.Close();
 
         }
     }

@@ -108,17 +108,17 @@ namespace Client
             string returner = "";
             string[] a = word.Split(',');
             List<int> listIds = new List<int>();
-            returner = a[0] + "," + a[1] + ",";
-            //foreach(string s in a)
-            //{
-            //    listIds.Add(Convert.ToInt32(s));
-            //}
-            for (int i = 2; i < a.Length; i++)
+            //returner = a[0] + "," + a[1] + ",";
+            foreach (string s in a)
             {
-                listIds.Add(Convert.ToInt32(a[i]));
+                listIds.Add(Convert.ToInt32(s));
             }
+            //for (int i = 2; i < a.Length; i++)
+            //{
+            //    listIds.Add(Convert.ToInt32(a[i]));
+            //}
 
-            
+
             foreach (int i in listIds)
             {
                 List<Skladnik> tmp = ZbudujSkladniki(source);
