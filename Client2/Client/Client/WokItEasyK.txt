@@ -1,0 +1,11 @@
+10
+1#Sos#True
+2#Posypka#True
+3#Podstawa#True
+4#Proteina#True
+5#Napoje#False
+6#Inne#False
+7#Zupa#False
+8#Piwo#False
+9#Wino#False
+11#Wódka#False

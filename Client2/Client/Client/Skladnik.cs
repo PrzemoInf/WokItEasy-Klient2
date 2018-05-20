@@ -108,17 +108,10 @@ namespace Client
             string returner = "";
             string[] a = word.Split(',');
             List<int> listIds = new List<int>();
-            //returner = a[0] + "," + a[1] + ",";
             foreach (string s in a)
             {
                 listIds.Add(Convert.ToInt32(s));
             }
-            //for (int i = 2; i < a.Length; i++)
-            //{
-            //    listIds.Add(Convert.ToInt32(a[i]));
-            //}
-
-
             foreach (int i in listIds)
             {
                 List<Skladnik> tmp = ZbudujSkladniki(source);
@@ -128,6 +121,45 @@ namespace Client
                     {
                         returner += sm.nazwaSM;
                         returner += " ,";
+                    }
+                }
+
+            }
+            returner.TrimEnd(',');
+            return returner;
+
+        }
+        public static string GetNazwyZIdZPrzecinkamiKlient(string word,bool kuch=false)
+        {
+            string returner = "";
+            string[] a = word.Split(',');
+            List<int> listIds = new List<int>();
+            foreach (string s in a)
+            {
+                listIds.Add(Convert.ToInt32(s));
+            }
+            foreach (int i in listIds)
+            {
+                List<Skladnik> tmp = ZbudujSkladniki(source);
+                foreach (Skladnik sm in tmp)
+                {
+                    
+                    if (sm.IdSM == i)
+                    {
+                        if (kuch)
+                        {
+                            if(Kategoria.CzyNależyDoKuchni(sm.rodzajSM))
+                            {
+                                returner += sm.nazwaSM;
+                                returner += " ,";
+                            }
+                        }
+                        else
+                        {
+                            returner += sm.nazwaSM;
+                            returner += " ,";
+                        }
+                        
                     }
                 }
 

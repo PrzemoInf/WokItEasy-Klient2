@@ -108,6 +108,8 @@ namespace Client
                     button2.Visible = true;
                     button3.Visible = true;
                     button4.Visible = true;
+                    button5.Visible = true;
+                    button11.Visible = true;
                     MessageBox.Show("Połączono");
                 }
                 else if (tekst == "W") MessageBox.Show("Niepoprawne dane");
@@ -175,6 +177,8 @@ namespace Client
             button2.Visible = false;
             button3.Visible = false;
             button4.Visible = false;
+            button5.Visible = false;
+            button11.Visible = false;
 
         }
 
@@ -238,6 +242,36 @@ namespace Client
         private void button4_Click(object sender, EventArgs e)
         {
             Form4 oz = new Form4(IPBox.Text);
+            oz.Show();
+            if (Screen.AllScreens.Length > 1)
+            {
+                Screen[] screens = Screen.AllScreens;
+                Rectangle bounds = screens[1].Bounds;
+                oz.SetBounds(bounds.X, bounds.Y, bounds.Width, bounds.Height);
+                oz.StartPosition = FormStartPosition.Manual;
+                oz.Location = Screen.AllScreens[1].WorkingArea.Location;
+            }
+            oz.WindowState = FormWindowState.Maximized;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Form4 oz = new Form4(IPBox.Text,true);
+            oz.Show();
+            if (Screen.AllScreens.Length > 1)
+            {
+                Screen[] screens = Screen.AllScreens;
+                Rectangle bounds = screens[1].Bounds;
+                oz.SetBounds(bounds.X, bounds.Y, bounds.Width, bounds.Height);
+                oz.StartPosition = FormStartPosition.Manual;
+                oz.Location = Screen.AllScreens[1].WorkingArea.Location;
+            }
+            oz.WindowState = FormWindowState.Maximized;
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            OdbiórZamówień oz = new OdbiórZamówień();
             oz.Show();
             if (Screen.AllScreens.Length > 1)
             {

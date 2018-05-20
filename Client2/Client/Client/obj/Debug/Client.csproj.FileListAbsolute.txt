@@ -34,3 +34,4 @@ D:\INFORMATYKA\6\Zespołowe programowanie\Rest\WokItEasy-Klient2\Client2\Client\
 D:\INFORMATYKA\6\Zespołowe programowanie\Rest\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.exe
 D:\INFORMATYKA\6\Zespołowe programowanie\Rest\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.pdb
 C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.Form4.resources
+C:\Github\WokItEasy-Klient2\Client2\Client\Client\obj\Debug\Client.OdbiórZamówień.resources

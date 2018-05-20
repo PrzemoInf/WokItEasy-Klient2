@@ -19,7 +19,9 @@ namespace Client
     {
         string source = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasy1.txt");
         string source2 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasyZ.txt");
+        string source3 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\WokItEasyK.txt");
         List<Skladnik> l_Skladnik = new List<Skladnik>();
+        bool kuchnia = false;
         bool workWorkMoneyMade = true;
         int screenCount = 0;
         Thread thr;
@@ -30,6 +32,7 @@ namespace Client
         {
             IP = ip;
             InitializeComponent();
+            PobierzKategorie();
             PobierzZamówienia();
             if (Screen.AllScreens.Length > 1)
                 screenCount = 1;
@@ -39,6 +42,73 @@ namespace Client
             l_Skladnik = ZbudujListe();
             thr = new Thread(this.Pokazuj);
             thr.Start();
+        }
+        public Form4(string ip, bool k)
+        {
+            kuchnia = k;
+            IP = ip;
+            InitializeComponent();
+            PobierzKategorie();
+            PobierzZamówienia();
+            if (Screen.AllScreens.Length > 1)
+                screenCount = 1;
+            this.Location = Screen.AllScreens[screenCount].WorkingArea.Location;
+            //this.Location = new Point(0, 0);
+            this.Size = Screen.AllScreens[screenCount].WorkingArea.Size;
+            l_Skladnik = ZbudujListe();
+            thr = new Thread(this.Pokazuj);
+            thr.Start();
+        }
+        private void PobierzKategorie()
+        {
+            ASCIIEncoding asen = new ASCIIEncoding();
+            TcpClient tcpclnt = new TcpClient();
+            tcpclnt.Connect(IP, 8001);
+            Stream stm = tcpclnt.GetStream();
+            string str;
+            byte[] ba;
+            byte[] bb;
+            string tekst;
+            int k;
+            do
+            {
+                str = "SK";//Przesłanie komunikatu o checi pobrania listy zamówień
+                //str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                ba = asen.GetBytes(str);
+                stm.Write(ba, 0, ba.Length);
+                bb = new byte[256];
+                //k = stm.Read(bb, 0, 256);//dubel
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                // tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                str = "";
+            } while (tekst != "OK");
+
+            StreamWriter sw = new StreamWriter(source3);
+            k = stm.Read(bb, 0, 256);
+            tekst = "";
+            for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+            int ilosc = Convert.ToInt32(tekst);
+            string test = "";
+            UTF8Encoding coderUTF = new UTF8Encoding();
+            sw.WriteLine(ilosc);
+            for (int i = 0; i < ilosc; i++)
+            {
+                k = stm.Read(bb, 0, 3);
+                tekst = "";
+                for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                bb = new byte[Convert.ToInt32(tekst)];
+                k = stm.Read(bb, 0, Convert.ToInt32(tekst));
+                tekst = "";
+                tekst = System.Text.Encoding.UTF8.GetString(bb);
+                //for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                tekst += "";
+                tekst += "";
+                test = tekst;
+                sw.WriteLine(test);
+            }
+            sw.Close();
         }
         private void PobierzZamówienia()
         {
@@ -232,9 +302,14 @@ namespace Client
             str = Convert.ToString(id);
             ba = asen.GetBytes(str);
             stm.Write(ba, 0, ba.Length);
+
+            if (kuchnia == true) str = "1";
+            else str = "0";
+            ba = asen.GetBytes(str);
+            stm.Write(ba, 0, ba.Length);
+
             buttonsChanged = true;
             PobierzZamówienia();
-
         }
         void Działaj()
         {
@@ -251,23 +326,27 @@ namespace Client
             int Max = ileMaxWkolumnie * ileMaxWrzędzie;//maxymalna ilość btn na ekran?
             x = y = 0;
             y = 50;
-            List<Zamówienia> listaZam = Zamówienia.ZbudujZamówienia(source2);
+            List<Zamówienia> listaZam = Zamówienia.ZbudujZamówienia(source2, kuchnia);
             List<Skladnik> listaSkl = Skladnik.ZbudujSkladniki(source);
             //y = maxY;
             foreach (Zamówienia zamówienie in listaZam)
             {
                 if (a >= Max)
                     break;
-
-                StwórzButton(zamówienie.IdZamówienia, Skladnik.GetNazwyZIdZPrzecinkamiKlient(zamówienie.IdZamówień), zamówienie.DataZamówienia, x, y);
-                a++;
-                if (a % ileMaxWrzędzie == 0 && x != 0)//jeżeli w rzędzie jest już wystarczająco
+                string tekst = Skladnik.GetNazwyZIdZPrzecinkamiKlient(zamówienie.IdZamówień, kuchnia);
+                if ((tekst != "") && kuchnia ||!kuchnia)
                 {
-                    y += 205;
-                    x = 0;
+                    StwórzButton(zamówienie.IdZamówienia, Skladnik.GetNazwyZIdZPrzecinkamiKlient(zamówienie.IdZamówień), zamówienie.DataZamówienia, x, y);
+                    a++;
+                    if (a % ileMaxWrzędzie == 0 && x != 0)//jeżeli w rzędzie jest już wystarczająco
+                    {
+                        y += 205;
+                        x = 0;
+                    }
+                    else
+                        x += 205;
                 }
-                else
-                    x += 205;
+                
             }
             SetCount(Max);
         }
@@ -280,7 +359,7 @@ namespace Client
             }
             else
             {
-                List<Zamówienia> listaZam = Zamówienia.ZbudujZamówienia(source2);
+                List<Zamówienia> listaZam = Zamówienia.ZbudujZamówienia(source2, kuchnia);
                 if ((listaZam.Count - M) > 0)
                 {
                     label1.Text = "+" + (listaZam.Count - M);
@@ -292,15 +371,23 @@ namespace Client
         }
         void SetHour(string text)
         {
-            if (InvokeRequired)
+            try
             {
-                this.Invoke(new Action<string>(SetHour), new object[] { text });
-                return;
+                if (InvokeRequired)
+                {
+                    this.Invoke(new Action<string>(SetHour), new object[] { text });
+                    return;
+                }
+                else
+                {
+                    label2.Text = DateTime.Now.ToString();
+                }
             }
-            else
+            catch
             {
-                label2.Text = DateTime.Now.ToString();
+
             }
+            
         }
         private void label1_Click(object sender, EventArgs e)
         {
