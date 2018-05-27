@@ -50,6 +50,7 @@
             this.Controls.Add(this.listBox1);
             this.Name = "Form3";
             this.Text = "Form3";
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Zamknij);
             this.ResumeLayout(false);
 
         }

@@ -24,18 +24,137 @@ namespace Client
         List<Skladnik> l_Skladnik = new List<Skladnik>();
         Thread thr;
         string IP;
-        public OdbiórZamówień()
+        public OdbiórZamówień(string ip)
         {
+            IP = ip;
             InitializeComponent();
             if (Screen.AllScreens.Length > 1)
                 screenCount = 1;
             this.Location = Screen.AllScreens[screenCount].WorkingArea.Location;
             //this.Location = new Point(0, 0);
             this.Size = Screen.AllScreens[screenCount].WorkingArea.Size;
-            l_Skladnik= Skladnik.ZbudujSkladniki(source);
+            l_Skladnik = Skladnik.ZbudujSkladniki(source);
             thr = new Thread(this.Pokazuj);
             thr.Start();
         }
+        private void PobierzKategorie()
+        {
+            try
+            {
+                ASCIIEncoding asen = new ASCIIEncoding();
+                TcpClient tcpclnt = new TcpClient();
+                tcpclnt.Connect(IP, 8001);
+                Stream stm = tcpclnt.GetStream();
+                string str;
+                byte[] ba;
+                byte[] bb;
+                string tekst;
+                int k;
+                do
+                {
+                    str = "SK";//Przesłanie komunikatu o checi pobrania listy zamówień
+                               //str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                    ba = asen.GetBytes(str);
+                    stm.Write(ba, 0, ba.Length);
+                    bb = new byte[256];
+                    //k = stm.Read(bb, 0, 256);//dubel
+                    k = stm.Read(bb, 0, 256);
+                    tekst = "";
+                    for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                    // tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                    str = "";
+                } while (tekst != "OK");
+
+                StreamWriter sw = new StreamWriter(source3);
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                int ilosc = Convert.ToInt32(tekst);
+                string test = "";
+                UTF8Encoding coderUTF = new UTF8Encoding();
+                sw.WriteLine(ilosc);
+                for (int i = 0; i < ilosc; i++)
+                {
+                    k = stm.Read(bb, 0, 3);
+                    tekst = "";
+                    for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                    bb = new byte[Convert.ToInt32(tekst)];
+                    k = stm.Read(bb, 0, Convert.ToInt32(tekst));
+                    tekst = "";
+                    tekst = System.Text.Encoding.UTF8.GetString(bb);
+                    //for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                    tekst += "";
+                    tekst += "";
+                    test = tekst;
+                    sw.WriteLine(test);
+                }
+                sw.Close();
+            }
+            catch
+            {
+
+            }
+        }
+        private void PobierzZamówienia()
+        {
+            try
+            {
+                ASCIIEncoding asen = new ASCIIEncoding();
+                TcpClient tcpclnt = new TcpClient();
+                tcpclnt.Connect(IP, 8001);
+                Stream stm = tcpclnt.GetStream();
+                string str;
+                byte[] ba;
+                byte[] bb;
+                string tekst;
+                int k;
+                do
+                {
+                    str = "SZ";//Przesłanie komunikatu o checi pobrania listy zamówień
+                               //str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                    ba = asen.GetBytes(str);
+                    stm.Write(ba, 0, ba.Length);
+                    bb = new byte[256];
+                    //k = stm.Read(bb, 0, 256);//dubel
+                    k = stm.Read(bb, 0, 256);
+                    tekst = "";
+                    for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                    // tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                    str = "";
+                } while (tekst != "OK");
+
+                StreamWriter sw = new StreamWriter(source2);
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                int ilosc = Convert.ToInt32(tekst);
+                string test = "";
+                UTF8Encoding coderUTF = new UTF8Encoding();
+                sw.WriteLine(ilosc);
+                for (int i = 0; i < ilosc; i++)
+                {
+                    k = stm.Read(bb, 0, 3);
+                    tekst = "";
+                    for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                    bb = new byte[Convert.ToInt32(tekst)];
+                    k = stm.Read(bb, 0, Convert.ToInt32(tekst));
+                    tekst = "";
+                    tekst = System.Text.Encoding.UTF8.GetString(bb);
+                    //for (int j = 0; j < k; j++) tekst += (Convert.ToChar(bb[j]));
+                    tekst += "";
+                    tekst += "";
+                    test = tekst;
+                    sw.WriteLine(test);
+                }
+                sw.Close();
+            }
+            catch
+            {
+
+            }
+           
+        }
+        
         void Pokazuj()
         {
             int framer = 0;
@@ -110,6 +229,8 @@ namespace Client
 
         void Działaj()
         {
+            PobierzKategorie();
+            PobierzZamówienia();
             List<Zamówienia> listZam = new List<Zamówienia>();
             listZam = Zamówienia.ZbudujListeDoOdebrania(source2);
             foreach (Zamówienia zamówienie in listZam)
@@ -224,6 +345,9 @@ namespace Client
                 str = Convert.ToString(a);
                 ba = asen.GetBytes(str);
                 stm.Write(ba, 0, ba.Length);
+                Clear(1, a);
+                Clear(1, a);
+                Clear(1, a);
             }
             catch { }
         }
@@ -245,6 +369,52 @@ namespace Client
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void listBox2_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OznaczJakoWykonane(object sender, MouseEventArgs e)
+        {
+            int a = Convert.ToInt32(listBox1.SelectedItem.ToString());
+            Clear(2, a);
+            //Zamówienie.OdbrierzZamówienie(a);
+            ASCIIEncoding asen = new ASCIIEncoding();
+            TcpClient tcpclnt = new TcpClient();
+            tcpclnt.Connect(IP, 8001);
+            Stream stm = tcpclnt.GetStream();
+            string str;
+            byte[] ba;
+            byte[] bb;
+            string tekst;
+            int k;
+            do
+            {
+                str = "OD";//Przesłanie komunikatu o przesłaniu zrealizowanego zamówienia
+                           //str = Szyfrowanie.Encrypt(str, encryptyingCode);
+                ba = asen.GetBytes(str);
+                stm.Write(ba, 0, ba.Length);
+                bb = new byte[256];
+                //k = stm.Read(bb, 0, 256);//dubel
+                k = stm.Read(bb, 0, 256);
+                tekst = "";
+                for (int i = 0; i < k; i++) tekst += (Convert.ToChar(bb[i]));
+                // tekst = Szyfrowanie.Decrypt(tekst, encryptyingCode);
+                str = "";
+            } while (tekst != "OK");
+            str = Convert.ToString(a);
+            ba = asen.GetBytes(str);
+            stm.Write(ba, 0, ba.Length);
+            Clear(1, a);
+            Clear(1, a);
+            Clear(1, a);
         }
     }
 }

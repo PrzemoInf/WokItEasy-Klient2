@@ -28,23 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBox2 = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
-            // 
-            // listBox2
-            // 
-            this.listBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 39;
-            this.listBox2.Location = new System.Drawing.Point(381, 38);
-            this.listBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(337, 784);
-            this.listBox2.TabIndex = 7;
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -58,18 +46,6 @@
             this.label2.Text = "Do odbioru";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // listBox1
-            // 
-            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 39;
-            this.listBox1.Location = new System.Drawing.Point(-2, 38);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(337, 784);
-            this.listBox1.TabIndex = 5;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -82,27 +58,51 @@
             this.label1.Text = "W trakcie";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
+            // listBox2
+            // 
+            this.listBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.8F);
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 39;
+            this.listBox2.Location = new System.Drawing.Point(367, 38);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(337, 784);
+            this.listBox2.TabIndex = 7;
+            this.listBox2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listBox2_MouseClick);
+            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged_1);
+            // 
+            // listBox1
+            // 
+            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.8F);
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 39;
+            this.listBox1.Location = new System.Drawing.Point(9, 42);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(337, 784);
+            this.listBox1.TabIndex = 8;
+            this.listBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OznaczJakoWykonane);
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged_1);
+            // 
             // OdbiórZamówień
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(720, 819);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label1);
             this.Name = "OdbiórZamówień";
             this.Text = "OdbiórZamówień";
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OdbiórZamówień_MouseClick);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }

@@ -78,6 +78,7 @@
             this.Text = "Form4";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form4_Load);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form4_MouseClick);
             this.ResumeLayout(false);
             this.PerformLayout();
 

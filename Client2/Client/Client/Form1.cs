@@ -271,7 +271,7 @@ namespace Client
 
         private void button11_Click(object sender, EventArgs e)
         {
-            OdbiórZamówień oz = new OdbiórZamówień();
+            OdbiórZamówień oz = new OdbiórZamówień(IP);
             oz.Show();
             if (Screen.AllScreens.Length > 1)
             {

@@ -58,5 +58,10 @@ namespace Client
         {
 
         }
+
+        private void Zamknij(object sender, MouseEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
